@@ -2,14 +2,34 @@
 
 
 {% block head_title %}
-{% if category %}{{ category.name }}{% else %}Products{% endif %}
+{% if category %}{{ category.name|title }}{% else %}Products{% endif %} -
 {% endblock head_title %}
 
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div style="border-radius:1rem;" class="border bg-light shadow p-4 mt-5">
+                <h3 class="text-center">Categories</h3>
+                <hr>
+                <ul class="list-unstyled">
+                    <li {% if not category %}class="btn btn-sm btn-primary px-3 shadow"
+                        {% endif %}>
+                        <a class="text-decoration-none text-dark" href="{% url 'shop:product_list' %}">All</a>
+                    </li>
+                    {% for c in category_list %}
+                    <li {% if category.slug == c.slug %} class="btn btn-sm btn-primary px-3 shadow" {% endif %}>
+                        <a class="text-dark text-decoration-none" href="{{ c.get_absolute_url }}">{{ c.name|title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col">
 
+        </div>
 </div>
-    
+</div>
+
 {% endblock content %}
-    
