@@ -1,0 +1,4 @@
+-r production.txt
+
+Faker==13.4.0
+black
