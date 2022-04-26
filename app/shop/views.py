@@ -7,17 +7,17 @@ from .models import Category, Product
 def product_list(request, category_slug=None):
     category = None
     category_list = Category.objects.all()
-    products_list = Product.objects.filter(is_available=True)
+    product_list = Product.objects.filter(is_available=True)
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
-        products = products_list.filter(category=category_list)
+        product_list = product_list.filter(category=category)
     return render(
         request,
         "shop/product_list.html",
         {
             "category": category,
             "category_list": category_list,
-            "products_list": products_list,
+            "product_list": product_list,
         },
     )
 

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 
 {% block head_title %}
@@ -14,20 +15,53 @@
                 <h3 class="text-center">Categories</h3>
                 <hr>
                 <ul class="list-unstyled">
-                    <li {% if not category %}class="btn btn-sm btn-primary px-3 shadow"
+                    <li {% if not category %}class="border-bottom border-info px-3"
                         {% endif %}>
                         <a class="text-decoration-none text-dark" href="{% url 'shop:product_list' %}">All</a>
                     </li>
                     {% for c in category_list %}
-                    <li {% if category.slug == c.slug %} class="btn btn-sm btn-primary px-3 shadow" {% endif %}>
+                    <li {% if category.slug == c.slug %} class="border-bottom border-info px-3" {% endif %}>
                         <a class="text-dark text-decoration-none" href="{{ c.get_absolute_url }}">{{ c.name|title }}</a>
                     </li>
                     {% endfor %}
                 </ul>
             </div>
         </div>
-        <div class="col">
+        <div class="col-lg mt-5">
 
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for product in product_list %}
+                <a class="text-decoration-none text-dark" href="{{product.get_absolute_url}}">
+                <div class="col">
+                  <div class="card shadow">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                          <img 
+                          {% if product.image %} 
+                          src="{{product.image.url}}" 
+                          {% else %} 
+                          {% static 'img/no_image.png' %} 
+                          {% endif %} 
+                          class="img-fluid rounded-start" alt="{{product.title}}">
+                        </div>
+                        <div class="col-md-8">
+                    <div class="card-body">
+                      <p class="card-title">
+                          
+                        {{product.name|title}}
+                        </p>
+                      <p class="card-text">${{product.price}}</p>
+                      <p class="card-text">{{product.detail}}</p>
+                    </div>
+                     </div>
+                  </div>
+                </div>
+                </div>
+            </a>
+
+            {% endfor %}
+              </div>
+      
         </div>
 </div>
 </div>
